@@ -1,0 +1,52 @@
+{
+  "name": "rss-reader.anka1928",
+  "version": "0.0.1",
+  "description": "Hexlet Project 3",
+  "scripts": {
+    "test": "jest",
+    "webpack-serve": "webpack-serve",
+    "babel-node": "babel-node",
+    "eslint": "eslint",
+    "webpack": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anka1928/project-lvl3-s414.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anka1928/project-lvl3-s414#readme"
+  },
+  "homepage": "https://github.com/anka1928/project-lvl3-s414#readme",
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5",
+    "bootstrap": "^4.3.1",
+    "popper.js": "^1.14.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.4.0",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^1.0.1",
+    "debug": "^4.1.1",
+    "eslint": "^5.15.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.0",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.1",
+    "jquery": "^3.3.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  }
+}
