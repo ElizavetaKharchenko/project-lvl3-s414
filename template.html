@@ -11,13 +11,19 @@
     <h1 class="display-4">RSS Reader</h1>
     <p class="lead">This is a simple web based rss reader.</p>
     <hr class="my-4">
-    <form class="form-inline">
+    <form class="form-inline" id='formAddFeed'>
       <div class="form-group mr-sm-2">
-        <label class="mr-2" for="FeedURLInput">Feed URL</label>
-        <input type="text" class="form-control" id="FeedURLInput" placeholder="Enter URL">
+        <label class="mr-2" for="feedURLInput">Feed URL</label>
+        <input type="text" class="form-control" id="feedURLInput" placeholder="Enter URL" required>
       </div>
-      <button type="submit" class="btn btn-primary">Add</button>
+      <button type="button" class="btn btn-primary ml-3" id="btnAddFeed" disabled>Add</button>
     </form>
+  </div>
+  <div class="list-container">
+    <div class="list-group channel-list">
+    </div>
+    <div class="list-group articles-list">
+    </div>
   </div>
 </body>
 </html>
