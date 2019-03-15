@@ -2,7 +2,7 @@ import WatchJS from 'melanke-watchjs';
 import axios from 'axios';
 import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.min';
-import isValid from './validator';
+import validate from './validator';
 import parse from './parser';
 import { articlesRender, channelsRender } from './renders';
 
@@ -20,7 +20,7 @@ export default () => {
     inputValue: '',
     submitted: false,
     inputState: '',
-    errorType: '',
+    errorMessage: '',
   };
 
   const { watch } = WatchJS;
@@ -33,28 +33,32 @@ export default () => {
   input.addEventListener('input', (e) => {
     state.inputValue = e.target.value;
     if (state.inputValue === '') {
+      input.value = '';
       state.inputState = 'empty';
+      state.errorMessage = '';
+      btnAddFeed.setAttribute('disabled', '');
     } else {
-      const validation = isValid(state.inputValue, state.feedsUrl);
+      const validation = validate(state.inputValue, state.feedsUrl);
       state.inputState = validation.state;
-      state.errorType = validation.error;
+      state.errorMessage = validation.error;
     }
   });
 
-  btnAddFeed.addEventListener('click', () => {
+  formAddFeed.addEventListener('submit', (e) => {
+    e.preventDefault();
     const feedUrl = state.inputValue;
     const urlProxy = `${proxyCors}${feedUrl}`;
+    input.value = '';
+    state.inputState = 'empty';
+    btnAddFeed.setAttribute('disabled', '');
     axios.get(urlProxy).then((result) => {
       state.feedsUrl.push(feedUrl);
       const { items, channelTitle, description } = parse(result.data);
       state.feeds.channels.push({ channelTitle, description });
       state.feeds.articles.push(...items);
+    }).catch((error) => {
+      state.errorMessage = error.message;
     });
-  });
-
-  formAddFeed.addEventListener('submit', (e) => {
-    btnAddFeed.click();
-    e.preventDefault();
   });
 
   watch(state, 'inputState', () => {
@@ -73,9 +77,6 @@ export default () => {
   });
 
   watch(state, 'feeds', () => {
-    input.value = '';
-    state.inputState = 'empty';
-    btnAddFeed.setAttribute('disabled', '');
     channelsRender(state.feeds.channels);
     articlesRender(state.feeds.articles);
     $(document).ready(() => {
@@ -86,6 +87,12 @@ export default () => {
         $('.modal-window').find('.modal-body p').text(desc);
         $('.modal-window').modal('show');
       });
+    });
+  });
+
+  watch(state, 'errorMessage', () => {
+    $(document).ready(() => {
+      $('.jumbotron').find('.text-danger').text(state.errorMessage);
     });
   });
 };

@@ -1,6 +1,9 @@
 export default (xml) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(xml, 'application/xml');
+  if (!doc.querySelector('channel')) {
+    throw new Error('URL does not contain rss feeds');
+  }
   const channelTitle = doc.querySelector('channel title').textContent;
   const description = doc.querySelector('channel description').textContent;
   const items = [...doc.querySelectorAll('item')].map((elem) => {

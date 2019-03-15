@@ -1,5 +1,3 @@
-// import 'bootstrap/dist/js/bootstrap.min';
-
 export const articlesRender = (articles) => {
   const container = document.querySelector('.articles-list');
   const header = document.createElement('h2');
