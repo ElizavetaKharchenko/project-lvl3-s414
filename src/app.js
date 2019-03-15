@@ -1,5 +1,7 @@
 import WatchJS from 'melanke-watchjs';
 import axios from 'axios';
+import $ from 'jquery';
+import 'bootstrap/dist/js/bootstrap.min';
 import isValid from './validator';
 import parse from './parser';
 import { articlesRender, channelsRender } from './renders';
@@ -10,6 +12,10 @@ export default () => {
     feeds: {
       channels: [],
       articles: [],
+    },
+    modal: {
+      content: '',
+      active: false,
     },
     inputValue: '',
     submitted: false,
@@ -22,6 +28,7 @@ export default () => {
   const btnAddFeed = document.querySelector('#btnAddFeed');
   const proxyCors = 'https://cors-anywhere.herokuapp.com/';
   const formAddFeed = document.querySelector('#formAddFeed');
+
 
   input.addEventListener('input', (e) => {
     state.inputValue = e.target.value;
@@ -71,5 +78,14 @@ export default () => {
     btnAddFeed.setAttribute('disabled', '');
     channelsRender(state.feeds.channels);
     articlesRender(state.feeds.articles);
+    $(document).ready(() => {
+      $('.modalBtn').click((e) => {
+        const articleTitle = e.target.previousElementSibling.textContent;
+        const article = state.feeds.articles.filter(({ title }) => title === articleTitle);
+        const desc = article[0].articleDescription;
+        $('.modal-window').find('.modal-body p').text(desc);
+        $('.modal-window').modal('show');
+      });
+    });
   });
 };
