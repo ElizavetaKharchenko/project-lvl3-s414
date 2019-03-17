@@ -4,22 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <title>RSS Reader</title>
 </head>
 <body>
-  <div class="jumbotron">
+  <div class="jumbotron text-center">
     <h1 class="display-4">RSS Reader</h1>
     <p class="lead">This is a simple web based rss reader.</p>
     <hr class="my-4">
-    <form class="form-inline" id='formAddFeed'>
-      <div class="form-group mr-sm-2">
-        <label class="mr-2" for="feedURLInput">Feed URL</label>
-        <input type="text" class="form-control" id="feedURLInput" placeholder="Enter URL" required>
-      </div>
-      <button type="submit" class="btn btn-primary ml-3" id="btnAddFeed" disabled>Add</button>
-    </form>
-    <small class="form-text text-danger d-block p-2" role="alert"></small>
-  </div>
+     <form class="row justify-content-center align-items-center" id="formAddFeed">
+       <div class="form-group col-8">
+         <div class="input-group row">
+           <div class="input-group-prepend">
+             <label class="input-group-text" for="feedURLInput">Feed URL</label>
+           </div>
+           <input type="text" class="form-control" id="feedURLInput" placeholder="Enter URL" required="">
+           <div class="input-group-append">
+             <button type="submit" class="btn btn-outline-primary" id="btnAddFeed" disabled="">Add channel</button>
+           </div>
+         </div>
+       </div>
+     </form>
+   <small class="form-text text-danger d-block p-2" role="alert"></small>
+ </div>
   <div class="list-container">
     <div class="list-group channel-list">
     </div>

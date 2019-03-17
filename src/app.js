@@ -27,9 +27,7 @@ export default () => {
   const { watch } = WatchJS;
   const input = document.querySelector('#feedURLInput');
   const btnAddFeed = document.querySelector('#btnAddFeed');
-  // const proxyCors = 'https://cors-anywhere.herokuapp.com/';
-  // const proxyCors = 'https://crossorigin.me/';
-  const proxyCors = 'http://cors.io/?';
+  const proxyCors = 'https://cors-anywhere.herokuapp.com/';
   const formAddFeed = document.querySelector('#formAddFeed');
 
 
@@ -37,17 +35,16 @@ export default () => {
     if (state.feedsUrl.length === 0) {
       return;
     }
-    const promises = state.feedsUrl.map(url => axios.get(`${url}`)); // ${proxyCors}
+    const promises = state.feedsUrl.map(url => axios.get(`${proxyCors}${url}`));
     axios.all(promises)
       .then((response) => {
         const newFeeds = response.map((res) => {
           const { items } = parse(res.data);
           return items.filter(item => !state.feeds.articles.some(_.isEqual(item)));
         }).flat();
-        console.log(newFeeds);
         state.feeds.articles.push(...newFeeds);
         setTimeout(update, 5000);
-      }).catch(() => {
+      }).finally(() => {
         setTimeout(update, 5000);
       });
   };
@@ -69,8 +66,7 @@ export default () => {
   formAddFeed.addEventListener('submit', (e) => {
     e.preventDefault();
     const feedUrl = state.inputValue;
-    // const urlProxy = `${proxyCors}${feedUrl}`;
-    const urlProxy = `${feedUrl}`;
+    const urlProxy = `${proxyCors}${feedUrl}`;
     state.submitted = true;
     axios.get(urlProxy).then((result) => {
       state.feedsUrl.push(feedUrl);
@@ -80,7 +76,6 @@ export default () => {
       state.submitted = false;
       state.inputState = 'empty';
     }).catch((error) => {
-      console.log(error);
       state.errorMessage = error.message;
       state.submitted = false;
     }).finally(() => setTimeout(update, 5000));
