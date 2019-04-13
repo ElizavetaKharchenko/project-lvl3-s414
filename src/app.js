@@ -29,7 +29,8 @@ export default () => {
   const btnAddFeed = document.querySelector('#btnAddFeed');
   const proxyCors = 'https://cors-anywhere.herokuapp.com/';
   const formAddFeed = document.querySelector('#formAddFeed');
-
+  const inputStatus = $('.jumbotron').find('.form-text');
+  const links = [...document.querySelectorAll('.btn-link')]
 
   const update = () => {
     if (state.feedsUrl.length === 0) {
@@ -43,12 +44,20 @@ export default () => {
           return items.filter(item => !state.feeds.articles.some(_.isEqual(item)));
         }).flat();
         state.feeds.articles.push(...newFeeds);
-        setTimeout(update, 5000);
+        setTimeout(update, 60000);
       }).finally(() => {
-        setTimeout(update, 5000);
+        setTimeout(update, 60000);
       });
   };
 
+  links.map(link => link.addEventListener('click', (e) => {
+    e.preventDefault();
+    input.value = e.target.hash.slice(1);
+    state.inputValue = e.target.hash.slice(1);
+    const validation = validate(state.inputValue, state.feedsUrl);
+    state.inputState = validation.state;
+    state.errorMessage = validation.error;
+  }));
 
   input.addEventListener('input', (e) => {
     state.inputValue = e.target.value;
@@ -56,6 +65,7 @@ export default () => {
       input.value = '';
       state.inputState = 'empty';
       state.errorMessage = '';
+      state.message = 'Input URL-address';
     } else {
       const validation = validate(state.inputValue, state.feedsUrl);
       state.inputState = validation.state;
@@ -78,7 +88,7 @@ export default () => {
     }).catch((error) => {
       state.errorMessage = error.message;
       state.submitted = false;
-    }).finally(() => setTimeout(update, 5000));
+    }).finally(() => setTimeout(update, 60000));
   });
 
   watch(state, 'inputState', () => {
@@ -87,14 +97,25 @@ export default () => {
       input.classList.remove('is-valid');
       btnAddFeed.setAttribute('disabled', '');
       input.value = '';
+      inputStatus.text('Input URL-address')
+        .removeClass('text-danger')
+        .addClass('text-info');
     } else if (state.inputState === 'invalid') {
       input.classList.remove('is-valid');
       input.classList.add('is-invalid');
       btnAddFeed.setAttribute('disabled', '');
+      inputStatus.text(state.errorMessage)
+        .removeClass('text-info')
+        .removeClass('text-success')
+        .addClass('text-danger');
     } else {
       input.classList.remove('is-invalid');
       input.classList.add('is-valid');
       btnAddFeed.removeAttribute('disabled', '');
+      inputStatus.text('Looks good!')
+        .removeClass('text-info')
+        .removeClass('text-danger')
+        .addClass('text-success');
     }
   });
 
@@ -103,18 +124,13 @@ export default () => {
     articlesRender(state.feeds.articles);
     $(document).ready(() => {
       $('.modalBtn').click((e) => {
-        const articleTitle = e.target.previousElementSibling.textContent;
+        const div = e.target.closest('div').previousElementSibling;
+        const articleTitle = $(div).find('a').text();
         const article = state.feeds.articles.filter(({ title }) => title === articleTitle);
         const desc = article[0].articleDescription;
         $('.modal-window').find('.modal-body p').text(desc);
         $('.modal-window').modal('show');
       });
-    });
-  });
-
-  watch(state, 'errorMessage', () => {
-    $(document).ready(() => {
-      $('.jumbotron').find('.text-danger').text(state.errorMessage);
     });
   });
 

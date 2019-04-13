@@ -4,9 +4,13 @@ export const articlesRender = (articles) => {
   header.classList.add('ml-2');
   header.textContent = 'Articles';
   const innerHTML = articles.map(({ title, link }) => (
-    `<div class="list-group-item">
-      <a href="${link}" class="article-link">${title}</a>
-      <a href="#modalBtn" role="button" class="btn btn-outline-secondary btn-sm ml-3 modalBtn" data-toggle="modal">See more</a>
+    `<div class="list-group-item row">
+      <div class="col">
+        <a href="${link}" class="article-link text-info">${title}</a>
+      </div>
+      <div class="col">
+        <a href="#modalBtn" role="button" class="btn btn-outline-secondary btn-sm mt-3 modalBtn" data-toggle="modal">Description</a>
+      </div>
     </div>`
   )).join('');
   container.innerHTML = innerHTML;

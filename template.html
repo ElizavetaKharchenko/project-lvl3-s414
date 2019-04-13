@@ -5,46 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./favicon/favicon.ico" type="image/x-icon">
   <title>RSS Reader</title>
 </head>
 <body>
-  <div class="jumbotron text-center">
-    <h1 class="display-4">RSS Reader</h1>
-    <p class="lead">This is a simple web based rss reader.</p>
-    <hr class="my-4">
-     <form class="row justify-content-center align-items-center" id="formAddFeed">
-       <div class="form-group col-8">
-         <div class="input-group row">
-           <div class="input-group-prepend">
-             <label class="input-group-text" for="feedURLInput">Feed URL</label>
-           </div>
-           <input type="text" class="form-control" id="feedURLInput" placeholder="Enter URL" required="">
-           <div class="input-group-append">
-             <button type="submit" class="btn btn-outline-primary" id="btnAddFeed" disabled="">Add channel</button>
-           </div>
-         </div>
-       </div>
-     </form>
-   <small class="form-text text-danger d-block p-2" role="alert"></small>
- </div>
-  <div class="list-container">
-    <div class="list-group channel-list">
+  <div class="jumbotron">
+    <div class="container text-center">
+      <h1 class="display-4">RSS Reader</h1>
+      <p class="lead">This is a simple web based rss reader.</p>
+      <hr class="my-4">
+      <form class="form-row justify-content-center" id="formAddFeed">
+        <div class="col-8">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="feedURLInput">Feed URL</label>
+            </div>
+            <input type="text" class="form-control" id="feedURLInput" placeholder="Enter URL" required="">
+          </div>
+          <div class="form-text small font-italic text-info mr-4" id="inputFeedback">Input URL-address</div>
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-outline-primary" id="btnAddFeed" disabled="">Add channel</button>
+        </div>
+      </form>
+      <div class="text-justify mt-5">
+        <span class="font-italic mr-2">Try one</span>
+          <a class="mr-2 btn-link" href="#http://feeds.bbci.co.uk/news/world/rss.xml" role="button">BBC world news</a>
+          <a class="btn-link" href="#http://www.cbn.com/cbnnews/world/feed/" role="button">CBN world news</a>
+      </div>
     </div>
-    <div class="list-group articles-list">
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="list-group-flush channel-list col-3"></div>
+      <div class="list-group-flush articles-list col-9"></div>
     </div>
   </div>
   <div class="modal fade modal-window">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Description</h4>
+          <h5 class="modal-title">Description</h5>
         </div>
         <div class="modal-body">
           <p></p>
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
