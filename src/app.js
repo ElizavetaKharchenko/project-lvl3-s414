@@ -30,7 +30,7 @@ export default () => {
   const proxyCors = 'https://cors-anywhere.herokuapp.com/';
   const formAddFeed = document.querySelector('#formAddFeed');
   const inputStatus = $('.jumbotron').find('.form-text');
-  const links = [...document.querySelectorAll('.btn-link')]
+  const links = [...document.querySelectorAll('.btn-link')];
 
   const update = () => {
     if (state.feedsUrl.length === 0) {
